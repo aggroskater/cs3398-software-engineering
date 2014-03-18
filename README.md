@@ -1,5 +1,5 @@
-cs3398-software-engineering by Team Moon Moon
-=============================================
+SRS by Team Moon Moon
+=====================
 
 For CS3398 with Dr. Seaman at Texas State University, Spring 2014. 
 
