@@ -1,0 +1,99 @@
+% This template found at: https://tex.stackexchange.com/questions/42602/software-requirements-specification-with-latex
+% It was a relatively simple template provided by SE user "Yiannis Lazarides"
+% whose page is here: https://tex.stackexchange.com/users/963/yiannis-lazarides
+
+%The scrreprt is part of the KOMA-script bundle of packages that does some 
+%Fancy-schmancy tweaks to the typography of the resulting document. You know, 
+%the kind of stuff that editors and designers love!
+\documentclass{scrreprt}
+
+%apparently something is deprecated, but using this package fixes that problem.
+\usepackage{scrhack} 
+
+%For code listings
+\usepackage{listings}
+
+%I honestly don't know what this is here for. Apparently it addresses some 
+%weird edge case having to do with underscores and hyphenation of words. We 
+%Could probably do without this package, but perhaps it's required by another 
+%package.
+\usepackage{underscore}
+
+%How to handle hyperlinks.
+\usepackage[bookmarks=true]{hyperref}
+\hypersetup{
+    bookmarks=true,    % show bookmarks bar?
+    pdftitle={Software Requirement Specification},    % title
+    pdfauthor={Team Moon Moon},                     % author
+    pdfsubject={TeX and LaTeX},                        % subject of the document
+    pdfkeywords={TeX, LaTeX, graphics, images}, % list of keywords
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=blue,       % color of internal links
+    citecolor=black,       % color of links to bibliography
+    filecolor=black,        % color of file links
+    urlcolor=purple,        % color of external links
+    linktoc=all            % all makes whole line a link. "page" -> only page#
+}%
+
+\def\myversion{0.1.0 }
+\title{%
+\flushright
+\rule{16cm}{5pt}\vskip1cm
+\Huge{SOFTWARE REQUIREMENTS\\ SPECIFICATION}\\
+\vspace{2cm}
+for\\
+\vspace{2cm}
+Online Postage Ordering System\\
+\vspace{2cm}
+\LARGE{Release 0.1.0\\}
+\vspace{2cm}
+\LARGE{Version \myversion approved\\}
+\vspace{2cm}
+Prepared by Team Moon Moon\\
+\vfill
+\rule{16cm}{5pt}
+}
+
+\date{}
+
+\usepackage{hyperref}
+\author{Team Moon Moon}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\chapter*{Revision History}
+\chapter{Introduction}
+
+Team Moon Moon has been tasked with developing a SRS for their Software 
+Engineering class at Texas State University. If Team Moon Moon doesn't do 
+this project, Team Moon Moon will fail D: Team Moon Moon wants to 
+graduate already and doesn't feel like taking this class again.
+
+\section{Purpose}
+
+The purpose of this project is to get our C. Because C's get degrees!
+
+\section{Project Scope and Product Features}
+
+BLAH BLAH BLAH
+
+\section{References}
+
+OMG OMG OMG
+
+\chapter{Overall Description}
+
+Many description. Much adjective. Wow.
+
+\section{Product Perspective}
+
+Such perspective. So edgy.
+
+\section{User Classes and Characteristics}
+
+TO THE MOON!!!
+
+% add other chapters and sections to suit
+\end{document}

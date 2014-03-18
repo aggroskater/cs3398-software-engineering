@@ -1,5 +1,5 @@
-cs3398-software-engineering
-===========================
+cs3398-software-engineering by Team Moon Moon
+=============================================
 
 For CS3398 with Dr. Seaman at Texas State University, Spring 2014. 
 
@@ -11,4 +11,3 @@ can be spent on the content.
 The "provided-resources" directory holds various documents provided by Dr. 
 Seaman that describe the requirements for this project and some examples of 
 good and bad work.
-

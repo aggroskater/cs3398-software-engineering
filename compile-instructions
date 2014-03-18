@@ -1,0 +1,13 @@
+$ pdflatex some-document.tex
+$ pdflatex some-document.tex
+
+Tada! You're done! You run in twice just to take care of table of content 
+issues that can crop up from time to time. But if you're going to push to 
+this repo, please do everyone a favor and DON'T push the pdf except for 
+release time. Nobody likes repositories that are bloated with TONS of 
+binaries when the underlying LaTeX code shows all the real changes.
+
+So, don't push every single change into a pdf. If you want a new pdf in the 
+repo, put it in the proper folder:
+
+release/Software-Requirements-Specification-Team-Moon-Moon.pdf
