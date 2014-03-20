@@ -119,7 +119,8 @@ Lol please shoot me now nobody does software development like this anymore.
 
 \subsection{Print Postage}
 
-DAE hate waterfall?
+The Print Postage function shall allow the user to print postage that has been 
+purchased, either to a file or directly to a printer.
 
 \subsection{Buy Postage}
 
@@ -217,7 +218,27 @@ OFFER YOU EXCLUSIVE PROMOTIONS ON INSIDER DEALS!
 
 \subsection{Print Postage}
 
-The system shall print your postage. Ironically.
+The system shall...
+
+\begin{enumerate}
+\item First, ensure...
+\begin{enumerate}
+\item that there is a valid, logged-in user requesting the postage.
+\item that the user is authorized to print the postage.
+\item that the user has sufficient credit to print the requested quantity of 
+postage.
+\item that the user's printer is available and functional.
+\end{enumerate}
+\item Then, the system shall prompt the user to confirm the printing of the 
+postage, showing current and subsequent account balances as necessary.
+\item Then, once confirmation from the user is obtained, the system shall 
+generate the postage on a special page, devoid of any other content, that the 
+user may print.
+\item Finally, the system shall, upon detection of the completed print job, 
+return the user to the ``account status'' page, where the new balance is 
+displayed. The system shall also update the new balance in the user's account 
+and add the job to the user's usage-history.
+\end{enumerate}
 
 \subsection{Buy Postage}
 
