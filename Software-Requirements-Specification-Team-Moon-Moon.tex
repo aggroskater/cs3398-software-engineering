@@ -132,11 +132,14 @@ herpderp
 
 \subsection{Get Postage Balance}
 
-has anyone ever been so far as even decided.
+The Get Postage Balance function shall allow the user to obtain their current
+amount in their postage buying account.
 
 \subsection{Calculate Postage}
 
-A Stamp? What's a stamp, grampa?
+The Calculate Postage function shall allow the user to enter a name, address,
+package type, mail class, and weight. The user shall then be able to see a
+calculated postage amount to ship their package.
 
 \subsection{Track/Confirm Package}
 
@@ -250,12 +253,32 @@ The system shall list all the times it serviced your account. Suggestively.
 
 \subsection{Get Postage Balance}
 
-The system shall present your balance. And laugh.
+The system shall...
+
+\begin{enumerate}
+\item First, ensure...
+\begin{enumerate}
+\item that there is a valid, logged-in user requesting the postage balance.
+\item that the user is authorized to view the postage balance.
+\end{enumerate}
+\item Then, the system shall find user account, and display postage balance 
+in order for the user to see.
+\end{enumerate}
 
 \subsection{Calculate Postage}
 
-The system shall calculate how much postage is required to mail your package. 
-Too much.
+The system shall...
+
+\begin{enumerate}
+\item First, ensure that there is a valid, logged-in user requesting the
+postage balance.  
+\item Then, the system shall provide a method for the user to enter a
+Name,Address,Packaging type, mail class, and weight.
+\item Then, the system shall calculate estimated shipping cost for the users
+package.
+\item Finally, the system shall, upon completion of calculation, display the
+estimated shipping costs.  
+\end{enumerate}
 
 \subsection{Track/Confirm Package}
 
