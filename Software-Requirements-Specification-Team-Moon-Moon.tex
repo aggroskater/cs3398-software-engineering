@@ -267,19 +267,46 @@ retrieve labels.
 
 \subsection{User Interfaces}
 
-IN-PROGRESS.
+The system shall provide users access to the USPS postage printing website via
+the Internet. There will be two different user interfaces that will accompany
+the website: Registered users, and Non-Registered users.
+
+Non-Registered Users: The user will be allowed to register for an account.
+The user shall be allowed access only to the follow functions:
+
+\begin{enumerate}
+\item Create an Account
+\item Track/Confirm Package
+\item Validate Address
+\end{enumerate}
+
+Registered Users: The user must be logged in at all times. 
+The user shall be allowed access to any of the following functions:
+
+\begin{enumerate}
+\item Login
+\item Print Postage
+\item Buy Postage
+\item List Postage Transactions
+\item Get Postage Balance
+\item Refund Request
+\item Track/Confirm Package
+\item Validate Address
+\item Log out
+\end{enumerate}
 
 \subsection{Hardware Interfaces}
 
-IN-PROGRESS.
+All hardware shall be required to connect to the internet.
 
 \subsection{Software Interfaces}
 
-IN-PROGRESS.
+There are no special software interface requirements outside of the 
+APIs mentioned in the System Interfaces subsection.
 
 \subsection{Communication Interfaces}
 
-IN-PROGRESS.
+There are no special communications interfaces requirements.
 
 \section{Functional Requirements}
 
@@ -290,41 +317,36 @@ the system in order to provide each function described in section
 \subsection{Create an Account}
 
 \begin{enumerate}
-\item The system requires, from the user, the following information: Full Name,
-Mailing Address, Email Address, Credit Card information, a unique username, and
-a password.
-\begin{enumerate}
-\item Invalid data is prevented from being entered.
-\item The username and password should meet the specified criteria [TBD].
-\item If the selected username and password do not meet the criteria, the
-system shall ask the user to reenter a new username and password.
-\end{enumerate}
+\item The user is prompted by the system to provide the following:
+\begin{itemize}
+\item Full Name
+\item Mailing Address
+\item Email Address
+\item Credit Card Information (Refer to Section 3.4)
+\item Unique Username
+\item Password
+\end{itemize}
+\item Once the user has entered the required information, the system verifies
+that the required attributes are present, that the email address has a valid
+form, that the login name does not exist in the database, and that the password
+meets the following criteria:
+\begin{itemize}
+\item Must be at least 10 characters long
+\item Must contain at least one letter
+\item Must contain at least one digit
+\item Must contain at least on special character (@,\#,\$,\%)
+\end{itemize}
+\item If the system detects invalid registration information (Required fields
+are empty, email address does not have a valid format, the login name is
+already in use, or the passwords do not match) then the system shall prompt the
+user to reenter the information.  
+\begin{itemize}
 \item All provided information, entered by the user, should be stored in the
-system.
+system (Refer to section 3.4).
+\end{itemize}
 \end{enumerate}
 
 \subsection{Print Postage}
-
-The system shall...
-
-\begin{enumerate}
-\item First, ensure...
-\begin{enumerate}
-\item that there is a valid, logged-in user requesting the postage.
-\item that the user is authorized to print the postage.
-\item that the user's printer is available and functional.
-\end{enumerate}
-\item Then, prompt the user to confirm the printing of the postage, showing
-current and subsequent account balances as necessary.
-\item Then, once confirmation from the user is obtained, generate the postage
-on a special page, devoid of any other content, that the user may print. Ensure
-that the user is unable to print to a file.
-\item Finally, upon detection of the completed print job, return the user to
-the ``account status'' page, where the successful print job is displayed in the
-list of transactions.
-\end{enumerate}
-
-\subsection{Buy Postage}
 
 The system shall...
 
@@ -334,35 +356,52 @@ The system shall...
 \item that there is a valid, logged-in user requesting to buy postage.
 Otherwise, redirect to the Log In function.
 \end{enumerate}
-\item Then, provide the user with options of what sort of postage to purchase.
-\item Then, upon the user selecting a package, query for the quantity of
-postage to purchase.
-\item Then, upon obtaining the quantity, calculate the total cost and prompt
-the user for a purchase method, either through account credit or through a
-one-time payment.
-\begin{enumerate}
-\item If the user wishes to utilize account credit, ensure that sufficient
-credit is available to cover the total cost. If there is enough credit, proceed
-to step 5. Otherwise, prompt user to add credit to their account or perform a
-one-time purchase.
-\item If the user wishes to purchase through a one-time payment, proceed to
-step 6.
+\item Then, provide the user with options of what sort of postage to print 
+for. Specifically, provide specific options for class and type, and permit 
+the user to enter a number for weight.
+\item Then, upon the user selecting a package class, type, and weight, 
+request sender and recipient addresses. Proceed to the verify address function 
+for each of these addresses to ensure they are valid.
+\item Then, upon confirming address validity, ask user whether s/he wishes to 
+add tracking numbers to the postage label.
+\item Then, upon confirmation of tracking number selection (yes or no), submit 
+all of the obtained data thus far to the UPS api in order to obtain a total 
+cost and a shipping label and tracking number if necessary.
+\item If the API call fails, the program must investigate the reason and 
+intelligently inform the user as to the source of the error and its correction.
+\item If the API call succeeds, present the user with the cost of the 
+label. If there is sufficient credit in the user's account as indicated by the
+Get Postage Balance function, continue.  Otherwise, jump to the Buy Postage
+function and return.
+\item Upon confirmation from the user that s/he wishes to print the label,
+enter the transaction into the transaction ledger, permit the user to print the
+label, and decrement the user's account balance.
 \end{enumerate}
-\item Upon confirming that enough credit is available, request the address for
-the postage to be delivered to and pass this address to the validate address
-function. If the validate address function confirms the validity of the
-address, proceed to step 8. Otherwise, prompt again for a valid address.
-\item Upon confirming that the user wishes to make a one-time payment, request
-the credit card information, either stored on the account or provided manually.
-Proceed to step 7.
-\item Upon confirmation of the one-time payment details, request an address for
-delivery. Pass the address to the address verification function. If the address
-is valid, proceed to step 8. Otherwise, request a valid address.
-\item Then, confirm the transaction details: amount, price, shipping
-destination.
-\item Upon confirmation from the user, enter the transaction into the
-transaction ledger, schedule the postage for printing, and proceed to the Print
-Postage function.
+
+\subsection{Buy Postage}
+
+The system shall...
+
+\begin{enumerate}
+\item First, ensure...
+\begin{enumerate}
+\item that there is a valid, logged-in user.
+\end{enumerate}
+\item Then, the system shall ask the user to select a card to pay for 
+account credit with. If the card exists, utilize it. Otherwise, obtain the 
+following details for the card and add it to the user's account.
+\begin{itemize}
+\item Type of Card
+\item Name on Card
+\item Card number
+\item Expiration Date
+\item Security Code
+\end{itemize}
+\item Then, the system shall attempt to debit the card for the requested amount
+of postage as selected from the list.
+\item Then, if the charge is successful, increment the user's account balance.
+\item If the charge is unsuccessful, inform the user as to why and 
+as to how to address the problem.
 \end{enumerate}
 
 \subsection{List Postage Transactions}
@@ -388,7 +427,6 @@ The system shall...
 \item First, ensure...
 \begin{enumerate}
 \item that there is a valid, logged-in user requesting the postage balance.
-\item that the user is authorized to view the postage balance.
 \end{enumerate}
 \item Then, find user account, and display postage balance in order for the
 user to see.
@@ -403,9 +441,10 @@ The system shall...
 postage balance.  
 \item Then, provide a method for the user to enter a Name,Address,Packaging
 type, mail class, and weight.
-\item Then, calculate estimated shipping cost for the users package.
-\item Finally, upon completion of calculation, display the estimated shipping
-costs.  
+\item Then, the system shall send this information provided by the user to a
+built in function, located at USPS.com, to determine the cost.  
+\item Finally, the system shall, upon completion of calculation, display the
+estimated shipping costs determined by USPS.com.
 \end{enumerate}
 
 \subsection{Track/Confirm Package}
@@ -416,8 +455,19 @@ The system shall...
 \item allow the user to enter in a tracking number.
 \item check the tracking number with the system database.
 \begin{enumerate}
-\item if valid, display the current tracking information for the user to
-access.
+\item if valid, display the current tracking information for the user to access
+from USPS.
+\begin{enumerate}
+\item The system shall output to the user:
+\begin{itemize}
+\item Date shipped
+\item Destination address
+\item Crojected delivery date
+\item Current location in transit
+\item The status of the package: not yet received by the post office, in
+transit, or delivered
+\end{itemize}
+\end{enumerate}
 \item if invalid, inform the user that the tracking number is not in the system
 database. The user may enter a tracking number or the user may cancel. 
 \end{enumerate}
@@ -432,25 +482,29 @@ The system shall...
 \item verify the username and password with the system database.
 \begin{enumerate}
 \item If valid, the user will be granted access to the following functions:
-\item If the username is not located within the system database, the system
-shall inform the user that their username is invalid. The user may enter a
-different username or the user may cancel.
-\item If password is not valid for the username entered, inform the user that
-the password is invalid. The user many enter a different password or the user
-may cancel 
+\begin{itemize}
+\item Print Postage
+\item Buy Postage
+\item List Postage Transactions
+\item Get Postage Balance
+\item Refund Request
+\item Log Out
+\end{itemize}
+\item If the username or password is invalid, the system shall inform the user.
+The user may enter a  username and password or the user may cancel 
 \end{enumerate}
-\item allow the user to request a password from the system to be emailed to the
-registered user.
+\item The system shall allow the user to request a new password from the system
+to be emailed to the user registered in the system database.
 \begin{enumerate}
 \item The user can request a password from the system, provided the user gives
 the system a valid username from the system database.
-\begin{enumerate}
-\item If the username is not within the database, inform the user that their
-username is invalid. The user may enter a different username of the user may
-cancel.
-\end{enumerate}
-\item The system shall randomize a password and send to the users accounts
-email in the system database.
+\begin{itemize}
+\item If the username is not within the database, the system shall inform the
+user that their username is invalid. The user may enter a different username or
+the user may cancel.
+\end{itemize}
+\item The system shall randomize a password and send to the email of the users
+account from the system database.
 \end{enumerate}
 \end{enumerate}
 
@@ -467,8 +521,8 @@ made on that date.
 \item Then, display a list of any and all postage transactions
 made on that date in descending order.
 \begin{enumerate}
-\item mark those transactions that are eligible for refund by
-determining which transactions fall within the ten day window.
+\item The system shall mark those transactions that are eligible for refund by
+determining which transactions fall within the ten day window.  
 \end{enumerate}
 \item Then, provide a method for the user to select an
 eligible transaction to be invalidated and refunded.
@@ -510,15 +564,16 @@ The system shall...
 
 \section{Performance Requirements}
 
-1500 people should be able to use web application simultaneously. System
-login/logout shall take less than eight seconds. Requests to Print Postage
+2000 people should be able to use web application simultaneously. System
+login/logout shall take less than five seconds. Requests to Print Postage
 should be processed within 10 seconds. All other requests should be processed
 within 5 seconds.
 
 \section{Logical Structure of the Data}
 
-IN-PROGRESS. Assigned to Preston Maness (me). I'm still working on a good 
-way to diagram everything.
+The logical structure of the data is detailed below.
+
+\includegraphics[scale=.4]{3-4-data-structure.png}
 
 \section{Design Constraints}
 
