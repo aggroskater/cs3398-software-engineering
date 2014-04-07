@@ -35,6 +35,9 @@
     linktoc=all            % all makes whole line a link. "page" -> only page#
 }%
 
+%graphics
+  \usepackage[pdftex]{graphicx}
+
 %We use these renews so that our enumerations get sublisted with numbers 
 %rather than letters.
 \renewcommand{\labelenumii}{\theenumii}
@@ -78,6 +81,7 @@ buzzword or buzzphrase?
 \item The skeleton has been updated to reflect the actual requirements 
 provided by Dr. Seaman.
 \item It's all really coming together now.
+\item Final Revision for Turn-In
 \end{enumerate}
 
 \chapter{Introduction}
@@ -88,8 +92,8 @@ The purpose of this document is to present a detailed description of the
 speciﬁcations and the requirements for a postage printing website. It will
 explain the purpose and features of the system, the interfaces of the system,
 what the system will do, the constraints under which it must operate, and how
-the system will react to external stimuli. This document is intended for both
-the stakeholders and the developers of the system.
+the system will react to interactions. This document is intended for both the
+stakeholders and the developers of the system.
 
 \section{Project Scope and Product Features}
 
@@ -119,14 +123,13 @@ Specifications. IEEE Computer Society, 1998.
 
 \section{Overview}
 
-The next section, the Overall Description, of this document gives an overview
-of the functionality of the product. It describes the informal requirements and
-is used to establish a context for the technical requirements specification in
-the next chapter. 
+The second section, the Overall Description, of this document gives an overview
+of the products functionality. It describes the informal requirements and is
+used to establish a context for the requirements specification in the third
+section.
 
 The third section, Requirements Specification, of this document is written
-primarily for the developers and describes, in technical terms, the details of
-the functionality of the product. 
+primarily for the developers. It describes details of product functionality. 
 
 \chapter{Overall Description}
 
@@ -145,7 +148,11 @@ address. As well, the user can either add credit to the website or purchase
 postage on a one-off basis, and can access a record of all transactions made
 with the website.
 
-DIAGRAM IN-PROGRESS.
+%\begin{figure}[H]
+%\centering
+\includegraphics[scale=.4]{2-1-product-perspective.png}
+%\label{sec_2_1}
+%\end{figure}
 
 \section{Product Functions}
 
@@ -162,12 +169,15 @@ years.
 \subsection{Print Postage}
 
 The Print Postage function shall allow the user to print postage that has been 
-purchased, \emph{directly to a printer and NOT to a file.}
+purchased, \emph{directly to a printer and NOT to a file.} The postage label 
+will be provided upon successfully calling the UPS API, which will return an 
+image suitable for printing. 
 
 \subsection{Buy Postage}
 
 The Buy Postage function shall allow the user to purchase postage, using
-available credit on their account, or by purchasing postage a la carte.
+available credit on their account. Upon a successful print, the user's account 
+balance is appropriately debited.
 
 \subsection{List Postage Transactions}
 
@@ -189,7 +199,8 @@ calculated postage amount to ship their package.
 \subsection{Track/Confirm Package}
 
 The track/confirm package function shall allow users to enter in a tracking
-number to see the status of their package.
+number to see the status of their package. The status of the package will be
+received from USPS  and displayed to the user. 
 
 \subsection{Login/Password Reset}
 
@@ -239,11 +250,20 @@ It is assumed that the end user:
 
 \section{External Interface Requirements}
 
-IN-PROGRESS.
+This section details any significant interfaces that the Online 
+Postage Printing Website will encounter.
 
 \subsection{System Interfaces}
 
-IN-PROGRESS.
+There are two main system interfaces:
+
+\begin{enumerate}
+\item The online credit card processing system. The website will 
+access this system via an API to charge cards.
+\item The UPS postage label API. The website will make several 
+queries to the UPS' APIs in order to calculate shipping cost and 
+retrieve labels.
+\end{enumerate}
 
 \subsection{User Interfaces}
 
